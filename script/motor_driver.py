@@ -31,18 +31,22 @@ pRight=gpio.PWM(enabRight,max_pwm)
 
 def calcDuty(lin_vel, ang_vel):
     #Initial condition
-    dutyLeft = 0
-    dutyRight = 0
-    velLeft = 0
-    velLeft = 0
+    global dutyLeft
+    global dutyRight
+    global velLeft
+    global velRight
+    dutyLeft = 0.0
+    dutyRight = 0.0
+    velLeft = 0.0
+    velRight = 0.0
 
     if ang_vel == 0:
         velLeft = lin_vel
         velRight = lin_vel
-    if ang_vel > 0:
-        velLeft = lin_vel + ang_vel
-        velRight = lin_vel + (ang_vel * -1)
     if ang_vel < 0:
+        velRight = lin_vel + ang_vel
+        velLeft = lin_vel + (ang_vel * -1)
+    if ang_vel > 0:
         velLeft = lin_vel + (ang_vel * -1)
         velRight = lin_vel + ang_vel
     
@@ -56,39 +60,55 @@ def calcDuty(lin_vel, ang_vel):
 
     pLeft.start(dutyLeft)
     pRight.start(dutyRight)
-    rospy.loginfo(rospy.get_caller_id() + " calcDuty value velLeft: %s; value velRight: %s; value dutyLeft: %s; value dutyRight: %s", velLeft, velRight, dutyLeft, dutyRight )
+    pesan = (" calcDuty value velLeft: %s; value velRight: %s; value dutyLeft: %s; value dutyRight: %s /n" % (velLeft, velRight, dutyLeft, dutyRight))
+    rospy.loginfo(rospy.get_caller_id() + pesan)
+    print(rospy.get_caller_id() + pesan)
 
-def send_raspi(velLeft, velRight):
-    if velLeft > 0.0:
+def send_raspi(avelLeft, avelRight):
+    pesan = (" send_raspi value avelLeft: %s, value avelRight: %s/n" % (avelLeft,avelRight))
+    print(rospy.get_caller_id() + pesan)
+    if avelLeft > 0.0:
         # Ban Left maju
         gpio.output(in1Left,False)
         gpio.output(in2Left,True)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Left maju")
-    if velLeft < 0.0:
+        pesan = " send_raspi Ban Left maju/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
+    if avelLeft < 0.0:
         # Ban Left mundur
         gpio.output(in1Left,True)
         gpio.output(in2Left,False)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Left mundur")
-    if velLeft == 0.0:
+        pesan = " send_raspi Ban Left mundur/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
+    if avelLeft == 0.0:
         # Ban Left stop
         gpio.output(in1Left,False)
         gpio.output(in2Left,False)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Left stop")
-    if velRight > 0.0:
+        pesan = " send_raspi Ban Left stop/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
+    if avelRight > 0.0:
         # Ban Right maju
         gpio.output(in1Right,False)
         gpio.output(in2Right,True)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Right maju")
-    if velRight < 0.0:
+        pesan = " send_raspi Ban Right maju/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
+    if avelRight < 0.0:
         # Ban Right mundur
         gpio.output(in1Right,True)
         gpio.output(in2Right,False)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Right mundur")
-    if velRight == 0.0:
+        pesan = " send_raspi Ban Right mundur/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
+    if avelRight == 0.0:
         # Ban Right stop
         gpio.output(in1Right,False)
         gpio.output(in2Right,False)
-        rospy.loginfo(rospy.get_caller_id() + " send_raspi Ban Right stop")    
+        pesan = " send_raspi Ban Right stop/n"
+        rospy.loginfo(rospy.get_caller_id() + pesan)
+        print(rospy.get_caller_id() + pesan)
 
 def scaling(input,in_max,out_max):
     out_t = input / in_max * out_max
@@ -101,7 +121,9 @@ def scaling(input,in_max,out_max):
 def callback(data):    
     lin_vel = scaling(data.linear.x, max_vel, 100.0)
     ang_vel = scaling(data.angular.z, max_vel, 100.0)
-    rospy.loginfo(rospy.get_caller_id() + " value linear x: %s; value angular z: %s", lin_vel, ang_vel)
+    pesan = (" value linear x: %s; value angular z: %s" % (lin_vel, ang_vel))
+    rospy.loginfo(rospy.get_caller_id() + pesan)
+    print(rospy.get_caller_id() + pesan)
     calcDuty(lin_vel, ang_vel)
     send_raspi(velLeft, velRight)
     
@@ -128,8 +150,10 @@ def stop_total():
     pLeft.stop()
     pRight.stop()
     gpio.cleanup()
+    print('ROS is STOP TOTAL')
 
 if __name__ == '__main__':    
     while not rospy.is_shutdown():
+        print('ROS is running')
         listener()
     stop_total()
