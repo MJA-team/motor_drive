@@ -44,8 +44,8 @@ def calcDuty(lin_vel, ang_vel):
         velLeft = lin_vel
         velRight = lin_vel
     if ang_vel < 0:
-        velLeft = lin_vel + ang_vel
-        velRight = lin_vel + (ang_vel * -1)
+        velRight = lin_vel + ang_vel
+        velLeft = lin_vel + (ang_vel * -1)
     if ang_vel > 0:
         velLeft = lin_vel + (ang_vel * -1)
         velRight = lin_vel + ang_vel
