@@ -27,7 +27,7 @@ def listener():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
-    rospy.init_node('motor_driver', anonymous=True)
+    rospy.init_node('motor_drive', anonymous=True)
 
     rospy.Subscriber("cmd_vel", geometry_msgs.msg.Twist, callback)
 
