@@ -34,7 +34,7 @@ def calcDuty(lin_vel, ang_vel):
     global dutyLeft
     global dutyRight
     global velLeft
-    global velLeft
+    global velRight
     dutyLeft = 0.0
     dutyRight = 0.0
     velLeft = 0.0
