@@ -65,6 +65,8 @@ def calcDuty(lin_vel, ang_vel):
     print(rospy.get_caller_id() + pesan)
 
 def send_raspi(avelLeft, avelRight):
+    pesan = (" send_raspi value avelLeft: %s, value avelRight: %s/n" % (avelLeft,avelRight))
+    print(rospy.get_caller_id() + pesan)
     if avelLeft > 0.0:
         # Ban Left maju
         gpio.output(in1Left,False)
