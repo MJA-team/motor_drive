@@ -24,6 +24,7 @@ gpio.setup(in2Left, gpio.OUT)
 gpio.setup(in1Right, gpio.OUT)
 gpio.setup(in2Right, gpio.OUT)
 gpio.setup(enabLeft, gpio.OUT)
+gpio.setup(enabRight, gpio.OUT)
 pLeft=gpio.PWM(enabLeft,max_pwm)
 pRight=gpio.PWM(enabRight,max_pwm)
 
