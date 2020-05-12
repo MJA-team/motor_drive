@@ -24,6 +24,7 @@ gpio.setup(in2Left, gpio.OUT)
 gpio.setup(in1Right, gpio.OUT)
 gpio.setup(in2Right, gpio.OUT)
 gpio.setup(enabLeft, gpio.OUT)
+gpio.setup(enabRight, gpio.OUT)
 pLeft=gpio.PWM(enabLeft,max_pwm)
 pRight=gpio.PWM(enabRight,max_pwm)
 
@@ -126,6 +127,7 @@ def stop_total():
     gpio.output(in2Right,False)
     pLeft.stop()
     pRight.stop()
+    gpio.cleanup()
 
 if __name__ == '__main__':    
     while not rospy.is_shutdown():
