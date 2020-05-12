@@ -56,7 +56,7 @@ def calcDuty(lin_vel, ang_vel):
 
     pLeft.start(dutyLeft)
     pRight.start(dutyRight)
-    pesan = (" calcDuty value velLeft: %s; value velRight: %s; value dutyLeft: %s; value dutyRight: %s /n" % (velLeft, velRight, dutyLeft, dutyRight)
+    pesan = (" calcDuty value velLeft: %s; value velRight: %s; value dutyLeft: %s; value dutyRight: %s /n" % (velLeft, velRight, dutyLeft, dutyRight))
     rospy.loginfo(rospy.get_caller_id() + pesan)
     print(rospy.get_caller_id() + pesan)
 
