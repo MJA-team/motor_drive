@@ -127,6 +127,7 @@ def stop_total():
     gpio.output(in2Right,False)
     pLeft.stop()
     pRight.stop()
+    gpio.cleanup()
 
 if __name__ == '__main__':    
     while not rospy.is_shutdown():
