@@ -31,18 +31,18 @@ pRight=gpio.PWM(enabRight,max_pwm)
 
 def calcDuty(lin_vel, ang_vel):
     #Initial condition
-    dutyLeft = 0
-    dutyRight = 0
-    velLeft = 0
-    velLeft = 0
+    global dutyLeft = 0
+    global dutyRight = 0
+    global velLeft = 0
+    global velLeft = 0
 
     if ang_vel == 0:
         velLeft = lin_vel
         velRight = lin_vel
-    if ang_vel > 0:
+    if ang_vel < 0:
         velLeft = lin_vel + ang_vel
         velRight = lin_vel + (ang_vel * -1)
-    if ang_vel < 0:
+    if ang_vel > 0:
         velLeft = lin_vel + (ang_vel * -1)
         velRight = lin_vel + ang_vel
     
@@ -60,43 +60,43 @@ def calcDuty(lin_vel, ang_vel):
     rospy.loginfo(rospy.get_caller_id() + pesan)
     print(rospy.get_caller_id() + pesan)
 
-def send_raspi(velLeft, velRight):
-    if velLeft > 0.0:
+def send_raspi(avelLeft, avelRight):
+    if avelLeft > 0.0:
         # Ban Left maju
         gpio.output(in1Left,False)
         gpio.output(in2Left,True)
         pesan = " send_raspi Ban Left maju/n"
         rospy.loginfo(rospy.get_caller_id() + pesan)
         print(rospy.get_caller_id() + pesan)
-    if velLeft < 0.0:
+    if avelLeft < 0.0:
         # Ban Left mundur
         gpio.output(in1Left,True)
         gpio.output(in2Left,False)
         pesan = " send_raspi Ban Left mundur/n"
         rospy.loginfo(rospy.get_caller_id() + pesan)
         print(rospy.get_caller_id() + pesan)
-    if velLeft == 0.0:
+    if avelLeft == 0.0:
         # Ban Left stop
         gpio.output(in1Left,False)
         gpio.output(in2Left,False)
         pesan = " send_raspi Ban Left stop/n"
         rospy.loginfo(rospy.get_caller_id() + pesan)
         print(rospy.get_caller_id() + pesan)
-    if velRight > 0.0:
+    if avelRight > 0.0:
         # Ban Right maju
         gpio.output(in1Right,False)
         gpio.output(in2Right,True)
         pesan = " send_raspi Ban Right maju/n"
         rospy.loginfo(rospy.get_caller_id() + pesan)
         print(rospy.get_caller_id() + pesan)
-    if velRight < 0.0:
+    if avelRight < 0.0:
         # Ban Right mundur
         gpio.output(in1Right,True)
         gpio.output(in2Right,False)
         pesan = " send_raspi Ban Right mundur/n"
         rospy.loginfo(rospy.get_caller_id() + pesan)
         print(rospy.get_caller_id() + pesan)
-    if velRight == 0.0:
+    if avelRight == 0.0:
         # Ban Right stop
         gpio.output(in1Right,False)
         gpio.output(in2Right,False)
