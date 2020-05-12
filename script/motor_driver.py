@@ -31,10 +31,14 @@ pRight=gpio.PWM(enabRight,max_pwm)
 
 def calcDuty(lin_vel, ang_vel):
     #Initial condition
-    global dutyLeft = 0
-    global dutyRight = 0
-    global velLeft = 0
-    global velLeft = 0
+    global dutyLeft
+    global dutyRight
+    global velLeft
+    global velLeft
+    dutyLeft = 0.0
+    dutyRight = 0.0
+    velLeft = 0.0
+    velRight = 0.0
 
     if ang_vel == 0:
         velLeft = lin_vel
